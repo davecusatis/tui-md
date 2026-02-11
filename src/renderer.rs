@@ -450,13 +450,13 @@ impl Renderer {
     fn handle_inline_code(&mut self, code: &str) {
         if self.in_table {
             self.current_cell_spans.push(Span::styled(
-                format!("`{}`", code),
+                code.to_string(),
                 Style::default().fg(Color::Magenta),
             ));
             return;
         }
         self.current_spans.push(Span::styled(
-            format!("`{}`", code),
+            code.to_string(),
             Style::default().fg(Color::Magenta),
         ));
     }
@@ -761,7 +761,7 @@ mod tests {
     fn inline_code() {
         let lines = render("use `code` here");
         let text = line_text(&lines[0]);
-        assert!(text.contains("`code`"));
+        assert!(text.contains("code"));
         assert!(lines[0]
             .spans
             .iter()
